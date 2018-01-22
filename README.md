@@ -1,2 +1,2 @@
 # NARIT_work
-NARIT_work - CESM and WRF plotting scripts
+NARIT work - CESM and WRF plotting scripts
