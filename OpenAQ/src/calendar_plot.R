@@ -1,12 +1,14 @@
-library(ropenaq)
-library("openair")
-library("dplyr")
-library(here)
-thai.locs <- aq_locations(country="TH", city="Chiang+Mai", location = "Chang+Phueak%2C+Mueang")
+require(ropenaq)
+require("openair")
+require("dplyr")
+require(here)
 
+thai.locs <- aq_locations(country="TH", city="Chiang+Mai", location = "Chang+Phueak%2C+Mueang")
 
 if (file.exists(here('OpenAQ/mungedData/2016_2018_PM10_NO2_CO_CM_CPM.Rda'))) {
   print('data file exists, carrying on')
+  load(here('OpenAQ/mungedData/2016_2018_PM10_NO2_CO_CM_CPM.Rda'))
+  
 } else{
   # OPENAQ will only return data in a single column if you ask for one measurement
   # otherwise measurements are separated by rows
@@ -84,20 +86,19 @@ if (file.exists(here('OpenAQ/mungedData/2016_2018_PM10_NO2_CO_CM_CPM.Rda'))) {
   all <- merge(all.tmp, cm.pcm.o3, by = "date")
   save(all, file = "2016_2018_PM10_NO2_CO_CM_CPM.Rda")
 }
-# load data ####
-load("2016_2018_PM10_NO2_CO_CM_CPM.Rda")
+
 
 # plot data ####
 # PM10 ####
 # calendar plot ####
 png(paste(here('OpenAQ/figures/'),'PM10_calendar_plot.png',sep=''))
-calendarPlot(mydata = cm.pcm.pm10, pollutant ='pm10', main = 'PM10 Chang Phueak Mueang')#
+calendarPlot(mydata = all, pollutant ='pm10', main = 'PM10 Chang Phueak Mueang')#
 dev.off()
 
 # no2 ####
 # calendar plot ####
 png(paste(here('OpenAQ','/figures/'),'NO2_calendar_plot.png',sep=''))
-calendarPlot(mydata = cm.pcm.no2, pollutant ='no2', main = 'NO2 Chang Phueak Mueang / ppm')#
+calendarPlot(mydata = all, pollutant ='no2', main = 'NO2 Chang Phueak Mueang / ppm')#
 dev.off()
  
 # calcPercentile(cm.pcm.no2, 
