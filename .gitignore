@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
+
+*.Rproj
+*checkpoint*
+
+*.Rproj
+
+NARIT_work.Rproj
